@@ -51,6 +51,7 @@ MY_APPS = [
     "hospital",
     "consultation",
     "pathology",
+    "patient",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + MY_APPS
