@@ -18,10 +18,3 @@ class Hospital(AbstractUser):
     type_of_assistance = models.CharField(max_length=50, choices=CHOOSE_THE_ASSISTANCE)
     type_of_hospital = models.CharField(max_length=50, choices=CHOOSE_THE_TYPE)
     financial_goal = models.CharField(max_length=50, choices=CHOOSE_FINANCIAL_GOAL)
-
-
-class Addres(AbstractUser):
-    Street = models.CharField(max_length=100)
-    number = models.IntegerField(unique=True)
-    district = models.CharField(max_length=50)
-    cep = models.integerField()
