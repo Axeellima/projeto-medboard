@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from hospital.models import Hospital
+from address.models import Address
 from address.serializers import AddressSerializer
 from hospital.models import (
     CHOOSE_FINANCIAL_GOAL,
@@ -17,3 +19,19 @@ class HospitalSerializer(serializers.Serializer):
     updated_at = serializers.DateTimeField(read_only=True)
 
     address = AddressSerializer()
+    
+    def update(self, instance: Hospital, validated_data: dict):
+        address_dict: dict = validated_data.pop("address", None)
+        
+        if address_dict:
+            address_obj, created = Address.objects.get_or_create(user=instance)
+            for key, value in address_dict.items():
+                setattr(address_obj, key, value)
+            address_obj.save()
+
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+
+        instance.save()
+
+        return instance

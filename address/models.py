@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Addres(models.Model):
+class Address(models.Model):
     street = models.CharField(max_length=100)
     number = models.IntegerField(unique=True)
     district = models.CharField(max_length=50)
