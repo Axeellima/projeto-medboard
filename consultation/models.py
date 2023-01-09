@@ -6,3 +6,5 @@ class Consultation(models.Model):
     date = models.DateField()
     hour = models.DateTimeField()
     employee = models.OneToOneField("Employee", on_delete=models.CASCADE)
+
+    patient = models.OneToOneField("Patient", on_delete=models.CASCADE)
