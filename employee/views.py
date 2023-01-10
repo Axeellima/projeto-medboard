@@ -12,7 +12,10 @@ class EmployeeView(ListCreateAPIView):
     serializer_class = EmployeeSerializer
 
     def get_queryset(self):
-        return self.queryset.filter(role_id=self.request.data["role"])
+        if(self.request.data["role"]):
+            return self.queryset.filter(role_id= self.request.data["role"])
+
+        return self.queryset.filter(role_id=1)
 
     def perform_create(self, serializer):
         if(self.request.data["role"] == 2):
