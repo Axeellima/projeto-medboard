@@ -19,6 +19,17 @@ class HospitalSerializer(serializers.Serializer):
     updated_at = serializers.DateTimeField(read_only=True)
 
     address = AddressSerializer()
+
+    def create(self,validated_data:dict) -> Hospital:
+        address_list = validated_data.pop('address')
+        hospitalobj = Hospital.objects.create(**validated_data)
+        
+        for address_dict in address_list:
+            addressobj, created = Address.objects.get_or_create(**address_dict)
+
+            hospitalobj.address.add(addressobj)
+        
+        return hospitalobj
     
     def update(self, instance: Hospital, validated_data: dict):
         address_dict: dict = validated_data.pop("address", None)
