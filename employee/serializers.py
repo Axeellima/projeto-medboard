@@ -21,7 +21,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
         "first_name",
         "last_name",
         "is_superuser",
-        "role"
+        "role_id"
         ]
         extra_kwargs = {"password": {"write_only": True}}
-        read_only_fields = ["is_superuser"]
+        read_only_fields = ["is_superuser", "role_id"]
