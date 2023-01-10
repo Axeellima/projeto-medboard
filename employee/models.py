@@ -12,5 +12,4 @@ class Employee(AbstractUser):
         "roles.Role",
         on_delete=models.CASCADE,
         related_name="employees",
-        blank=True,
     )

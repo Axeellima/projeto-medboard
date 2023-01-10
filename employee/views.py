@@ -18,6 +18,7 @@ class EmployeeView(ListCreateAPIView):
         return self.queryset.filter(role_id=1)
 
     def perform_create(self, serializer):
+
         if(self.request.data["role"] == 2):
             getRole = Role.objects.get_or_create(name="Médico")
             serializer.save(role=getRole[0])
