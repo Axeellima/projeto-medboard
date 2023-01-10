@@ -31,10 +31,7 @@ class EmployeeView(ListCreateAPIView):
             serializer.save(role=getRole[0])
 
         return serializer.data
-    def create(self, request, *args, **kwargs):
-        return super().create(request, *args, **kwargs)
-
     
-class EmployeeDeatilView(RetrieveUpdateAPIView):
+class EmployeeDetailView(RetrieveUpdateAPIView):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
