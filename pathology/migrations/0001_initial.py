@@ -34,6 +34,7 @@ class Migration(migrations.Migration):
                         related_name="pathology",
                         to="patient.patient",
                     ),
+                )
             ],
         ),
     ]
