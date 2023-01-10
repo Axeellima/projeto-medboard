@@ -6,3 +6,7 @@ class Address(models.Model):
     number = models.IntegerField(unique=True)
     district = models.CharField(max_length=50)
     cep = models.CharField(max_length=8)
+    hospital = models.OneToOneField(
+        "hospital.Hospital", on_delete=models.CASCADE, related_name="address"
+    )
+
