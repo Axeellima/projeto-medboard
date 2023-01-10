@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name="Addres",
+            name="Address",
             fields=[
                 (
                     "id",
@@ -31,13 +31,13 @@ class Migration(migrations.Migration):
                 ("district", models.CharField(max_length=50)),
 
                 ("cep", models.CharField(max_length=8)),
-                (
-                    "hospital",
+                    ("hospital",
                     models.OneToOneField(
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="address",
                         to="hospital.hospital",
                     ),
+                    )
             ],
         ),
     ]
