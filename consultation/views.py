@@ -11,10 +11,13 @@ class ConsultationView(ListCreateAPIView):
     serializer_class = ConsultationSerializer
 
     def perform_create(self, serializer):
+
+        
         
         serializer.save(employee=self.request.user)
 
         return serializer.data
+
 
 class ConsultationDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Consultation.objects.all()
