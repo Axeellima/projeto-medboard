@@ -21,6 +21,6 @@ urlpatterns = [
     path("api/", include("employee.urls")),
     path("api/", include("consultation.urls")),
     path("api/", include("roles.urls")),
-    path("api/", include("hospital.urls"))
-
+    path("api/", include("hospital.urls")),
+    path("api/", include("contact.urls")),
 ]
