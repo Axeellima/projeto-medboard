@@ -7,4 +7,4 @@ class Consultation(models.Model):
     hour = models.DateTimeField()
     employee = models.OneToOneField("employee.Employee", on_delete=models.CASCADE)
 
-    patient = models.OneToOneField("patient.Patient", on_delete=models.CASCADE)
+    patient = models.ForeignKey("patient.Patient", on_delete=models.CASCADE, related_name="consultation")
