@@ -7,9 +7,12 @@ class Employee(AbstractUser):
     password = models.CharField(max_length=20)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
+    contact = models.OneToOneField("contact.Contact", on_delete=models.CASCADE, null=True)
 
     role = models.ForeignKey(
         "roles.Role",
         on_delete=models.CASCADE,
         related_name="employees",
     )
+
+    contact = models.OneToOneField("contact.Contact" ,on_delete=models.CASCADE, related_name="employees", null=True)

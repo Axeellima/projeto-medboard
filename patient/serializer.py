@@ -7,14 +7,13 @@ from pathology.models import Pathology
 from .models import Patient
 
 
-class PatientSerializar(serializers.Serializer):
-    id = serializers.IntegerField(read_only=True)
-    name = serializers.CharField(max_length=50)
-    birth_date = serializers.DateField()
-    patient_code = serializers.CharField(max_length=10)
-    password = serializers.CharField(max_length=10)
+class PatientSerializar(serializers.ModelSerializer):
 
-    pathology = PathologySerializer()
+    class Meta:
+        model = Patient
+        fields = ["id", "name", "birth_date", "patient_code", "password", "contact"]
+        read_only_fields = ["patient_code", "password"]
+
 
     def generatePatientCode():
         letters = string.ascii_uppercase

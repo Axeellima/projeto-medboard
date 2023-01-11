@@ -12,6 +12,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
             )
         ],
     )
+    role_id = serializers.IntegerField()
     class Meta:
         model = Employee
         fields = [
@@ -22,8 +23,8 @@ class EmployeeSerializer(serializers.ModelSerializer):
         "last_name",
         "is_superuser",
         "role_id",
-        "role"
+        "contact"
                 ]
         extra_kwargs = {"password": {"write_only": True}}
-        read_only_fields = ["is_superuser", "role_id"]
-        write_only_fields = ["role"]
+        read_only_fields = ["is_superuser"]
+        write_only_fields = ["role_id"]
