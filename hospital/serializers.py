@@ -2,11 +2,6 @@ from rest_framework import serializers
 from hospital.models import Hospital
 from address.models import Address
 from address.serializers import AddressSerializer
-from hospital.models import (
-    CHOOSE_FINANCIAL_GOAL,
-    CHOOSE_THE_ASSISTANCE,
-    CHOOSE_THE_TYPE,
-)
 import ipdb
 
 
@@ -18,9 +13,6 @@ class HospitalSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "name",
-            "type_of_assistance",
-            "type_of_hospital",
-            "financial_goal",
             "created_at",
             "updated_at",
             "address",

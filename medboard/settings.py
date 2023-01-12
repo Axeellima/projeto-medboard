@@ -45,9 +45,7 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
-THIRD_PARTY_APPS = [
-    "rest_framework",
-]
+THIRD_PARTY_APPS = ["rest_framework", "drf_spectacular"]
 
 MY_APPS = [
     "employee",
@@ -161,3 +159,14 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "employee.Employee"
+
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "MedBoard API",
+    "DESCRIPTION": "Plataforma de um sistema de saúde funcionando com base em Funcionários, Hospitais, Pacientes e Consultas",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+}

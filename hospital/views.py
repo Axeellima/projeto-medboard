@@ -7,6 +7,8 @@ from employee.permissions import IsPostHospitalPermission, IsDirectorPermission
 
 
 class HospitalView(APIView):
+    queryset = Hospital
+    serializer_class = HospitalSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsPostHospitalPermission]
 
@@ -25,6 +27,8 @@ class HospitalView(APIView):
 
 
 class HospitalDetailView(APIView):
+    queryset = Hospital
+    serializer_class = HospitalSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsDirectorPermission]
 

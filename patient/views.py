@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from rest_framework.views import APIView, Response, Request, status
 from rest_framework.generics import CreateAPIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.generics import DestroyAPIView
 
 from .models import Patient
 from .serializers import PatientSerializer
@@ -14,6 +15,8 @@ from employee.permissions import (
 
 
 class PatientView(APIView):
+    queryset = Patient
+    serializer_class = PatientSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsSecretaryPermission | IsDirectorPermission]
 
@@ -30,6 +33,9 @@ class PatientView(APIView):
 
 
 class PatientCodeView(APIView):
+    queryset = Patient
+    serializer_class = PatientSerializer
+
     def get(self, request: Request, patient_code: str) -> Response:
         patient_obj = get_object_or_404(Patient, patient_code=patient_code)
         serializer = PatientSerializer(patient_obj)
@@ -37,12 +43,8 @@ class PatientCodeView(APIView):
         return Response(serializer.data)
 
 
-class PatientIdView(APIView):
+class PatientIdView(DestroyAPIView):
+    queryset = Patient
+    serializer_class = PatientSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsSecretaryPermission, IsDirectorPermission]
-
-    def delete(self, request: Request, patient_id: int) -> Response:
-        patient_obj = get_object_or_404(Patient, id=patient_id)
-        patient_obj.delete()
-
-        return Response(status=status.HTTP_204_NO_CONTENT)

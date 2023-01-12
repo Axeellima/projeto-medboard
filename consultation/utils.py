@@ -17,9 +17,6 @@
 
 import datetime
 
-date_test = {"date": "2023-03-15", "hour": "08:30:00"}
-print(date_test)
-
 
 def checkConsultationDate(data):
     hour = int(data["hour"][:2:])
@@ -35,21 +32,3 @@ def checkConsultationDate(data):
         return False
 
     return True
-
-    # {
-    #     "hospital": {
-    #         "id": 2,
-    #         "name": "São Caetano",
-    #         "type_of_assistance": null,
-    #         "type_of_hospital": null,
-    #         "financial_goal": null,
-    #         "created_at": "2023-01-12T03:40:02.614067Z",
-    #         "updated_at": "2023-01-12T03:40:02.614067Z",
-    #         "contact": null,
-    #         "address": null
-    #     },
-    #     "hospital_id": 2,
-    #     "patient_id": 1,
-    #     "date": "2023-03-15",
-    #     "hour": "08:30:00"
-    # }

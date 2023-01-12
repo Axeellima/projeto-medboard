@@ -1,0 +1,754 @@
+openapi: 3.0.3
+info:
+  title: MedBoard API
+  version: 1.0.0
+  description: Plataforma de um sistema de saúde funcionando com base em Funcionários,
+    Hospitais, Pacientes e Consultas
+paths:
+  /api/consultation/:
+    get:
+      operationId: api_consultation_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Consultation'
+          description: ''
+    post:
+      operationId: api_consultation_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Consultation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Consultation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Consultation'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Consultation'
+          description: ''
+  /api/contact/:
+    post:
+      operationId: api_contact_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contact'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Contact'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Contact'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+          description: ''
+  /api/employee/:
+    get:
+      operationId: api_employee_list
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Employee'
+          description: ''
+    post:
+      operationId: api_employee_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Employee'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Employee'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Employee'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+          description: ''
+  /api/employee/{id}/:
+    get:
+      operationId: api_employee_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+          description: ''
+    put:
+      operationId: api_employee_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Employee'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Employee'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Employee'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+          description: ''
+    patch:
+      operationId: api_employee_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedEmployee'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedEmployee'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedEmployee'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+          description: ''
+  /api/employee/login/:
+    post:
+      operationId: api_employee_login_create
+      description: |-
+        Takes a set of user credentials and returns an access and refresh JSON web
+        token pair to prove the authentication of those credentials.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomJWT'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CustomJWT'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CustomJWT'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomJWT'
+          description: ''
+  /api/employee/login/refresh/:
+    post:
+      operationId: api_employee_login_refresh_create
+      description: |-
+        Takes a set of user credentials and returns an access and refresh JSON web
+        token pair to prove the authentication of those credentials.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomJWT'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CustomJWT'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CustomJWT'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomJWT'
+          description: ''
+  /api/hospital/:
+    get:
+      operationId: api_hospital_retrieve
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hospital'
+          description: ''
+    post:
+      operationId: api_hospital_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Hospital'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Hospital'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Hospital'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hospital'
+          description: ''
+  /api/hospital/{id}:
+    patch:
+      operationId: api_hospital_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedHospital'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedHospital'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedHospital'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hospital'
+          description: ''
+    delete:
+      operationId: api_hospital_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/pathology/:
+    post:
+      operationId: api_pathology_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pathology'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Pathology'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Pathology'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pathology'
+          description: ''
+  /api/patient/:
+    get:
+      operationId: api_patient_retrieve
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patient'
+          description: ''
+    post:
+      operationId: api_patient_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Patient'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Patient'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Patient'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patient'
+          description: ''
+  /api/patient/{id}/:
+    delete:
+      operationId: api_patient_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/patient_code/{patient_code}/:
+    get:
+      operationId: api_patient_code_retrieve
+      parameters:
+      - in: path
+        name: patient_code
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patient'
+          description: ''
+  /api/role/:
+    post:
+      operationId: api_role_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Role'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Role'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Role'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Role'
+          description: ''
+components:
+  schemas:
+    Address:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        street:
+          type: string
+          maxLength: 100
+        number:
+          type: integer
+        district:
+          type: string
+          maxLength: 50
+        zipcode:
+          type: string
+          maxLength: 9
+      required:
+      - district
+      - id
+      - number
+      - street
+      - zipcode
+    Consultation:
+      type: object
+      properties:
+        hospital:
+          allOf:
+          - $ref: '#/components/schemas/Nested'
+          readOnly: true
+        hospital_id:
+          type: integer
+        patient_id:
+          type: integer
+        date:
+          type: string
+          format: date
+        hour:
+          type: string
+          format: time
+      required:
+      - date
+      - hospital
+      - hospital_id
+      - hour
+      - patient_id
+    Contact:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        number:
+          type: integer
+      required:
+      - id
+      - number
+    CustomJWT:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+          writeOnly: true
+      required:
+      - password
+      - username
+    Employee:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+        password:
+          type: string
+          writeOnly: true
+          maxLength: 20
+        first_name:
+          type: string
+          maxLength: 50
+        last_name:
+          type: string
+          maxLength: 50
+        is_superuser:
+          type: boolean
+          readOnly: true
+          title: Superuser status
+          description: Designates that this user has all permissions without explicitly
+            assigning them.
+        role_id:
+          $ref: '#/components/schemas/RoleIdEnum'
+        contact:
+          $ref: '#/components/schemas/Contact'
+      required:
+      - contact
+      - first_name
+      - id
+      - is_superuser
+      - last_name
+      - password
+      - role_id
+      - username
+    Hospital:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        address:
+          $ref: '#/components/schemas/Address'
+      required:
+      - address
+      - created_at
+      - id
+      - name
+      - updated_at
+    NameEnum:
+      enum:
+      - Secretário
+      - Médico
+      - Diretor
+      type: string
+    Nested:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        contact:
+          type: integer
+          nullable: true
+        address:
+          type: integer
+          nullable: true
+      required:
+      - created_at
+      - id
+      - name
+      - updated_at
+    PatchedEmployee:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+        password:
+          type: string
+          writeOnly: true
+          maxLength: 20
+        first_name:
+          type: string
+          maxLength: 50
+        last_name:
+          type: string
+          maxLength: 50
+        is_superuser:
+          type: boolean
+          readOnly: true
+          title: Superuser status
+          description: Designates that this user has all permissions without explicitly
+            assigning them.
+        role_id:
+          $ref: '#/components/schemas/RoleIdEnum'
+        contact:
+          $ref: '#/components/schemas/Contact'
+    PatchedHospital:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        address:
+          $ref: '#/components/schemas/Address'
+    Pathology:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+      required:
+      - id
+      - name
+    Patient:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        birth_date:
+          type: string
+          format: date
+          nullable: true
+        patient_code:
+          type: string
+          readOnly: true
+          nullable: true
+        contact:
+          type: integer
+          nullable: true
+        pathology:
+          type: array
+          items:
+            $ref: '#/components/schemas/Pathology'
+      required:
+      - id
+      - name
+      - pathology
+      - patient_code
+    Role:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          $ref: '#/components/schemas/NameEnum'
+      required:
+      - id
+      - name
+    RoleIdEnum:
+      enum:
+      - Secretário
+      - Médico
+      - Diretor
+      type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

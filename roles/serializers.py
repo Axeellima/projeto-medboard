@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from .models import Role, CHOOSE_ROLE_NAME
+from .models import Role, RoleName
 
 
 class RoleSerializer(serializers.ModelSerializer):
@@ -12,7 +12,7 @@ class RoleSerializer(serializers.ModelSerializer):
                 message="This role already exists.",
             )
         ],
-        choices=CHOOSE_ROLE_NAME,
+        choices=RoleName.choices,
     )
 
     class Meta:

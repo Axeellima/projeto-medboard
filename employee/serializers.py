@@ -6,7 +6,7 @@ from contact.serializers import ContactSerializer
 from contact.models import Contact
 
 from .models import Employee
-from roles.models import Role, CHOOSE_ROLE_NAME
+from roles.models import Role, RoleName
 
 
 class CustomJWTSerializer(TokenObtainPairSerializer):
@@ -28,7 +28,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
             )
         ],
     )
-    role_id = serializers.ChoiceField(choices=CHOOSE_ROLE_NAME)
+    role_id = serializers.ChoiceField(choices=RoleName.choices)
     contact = ContactSerializer()
 
     class Meta:
