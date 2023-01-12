@@ -1,43 +1,34 @@
-import random, string
-
 from rest_framework import serializers
 
-from pathology.serializer import PathologySerializer
+from pathology.serializers import PathologySerializer
 from pathology.models import Pathology
 from .models import Patient
+from .utils import generatePatientCode, generatePatientPassword
+import ipdb
 
 
-class PatientSerializar(serializers.ModelSerializer):
+class PatientSerializer(serializers.ModelSerializer):
+    pathology = PathologySerializer(many=True)
 
     class Meta:
         model = Patient
-        fields = ["id", "name", "birth_date", "patient_code", "password", "contact"]
+        fields = [
+            "id",
+            "name",
+            "birth_date",
+            "patient_code",
+            "contact",
+            "pathology",
+        ]
         read_only_fields = ["patient_code", "password"]
-
-
-    def generatePatientCode():
-        letters = string.ascii_uppercase
-        random_string = "".join(random.choice(letters) for i in range(4))
-
-        random_number = random.random()
-        round_number = round((random_number * 10000))
-
-        patient_code = f"{random_string}{round_number}"
-        return patient_code
-
-    def generatePatientPassword():
-        random_number = random.random()
-        password = round((random_number * 1000000))
-
-        return password
 
     def create(self, validated_data: dict) -> Patient:
         pathology_list = validated_data.pop("pathology")
+        # ipdb.set_trace()
+        patient_code = generatePatientCode()
+        patient_password = generatePatientPassword()
 
-        patient_code = self.generatePatientCode()
-        patient_password = self.generatePatientPassword()
-
-        patient_obj, create = Patient.objects.create(
+        patient_obj = Patient.objects.create(
             **validated_data,
             patient_code=patient_code,
             password=patient_password,

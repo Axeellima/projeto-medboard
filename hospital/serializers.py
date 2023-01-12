@@ -7,29 +7,38 @@ from hospital.models import (
     CHOOSE_THE_ASSISTANCE,
     CHOOSE_THE_TYPE,
 )
+import ipdb
 
 
 class HospitalSerializer(serializers.ModelSerializer):
+    address = AddressSerializer()
 
     class Meta:
         model = Hospital
-        fields = ["id", "name", "type_of_assistance", "type_of_hospital", "financial_goal", "created_at", "updated_at", "address"]
-        read_only_fields= ["created_at", "updated_at"]
+        fields = [
+            "id",
+            "name",
+            "type_of_assistance",
+            "type_of_hospital",
+            "financial_goal",
+            "created_at",
+            "updated_at",
+            "address",
+        ]
+        read_only_fields = ["created_at", "updated_at"]
 
-    def create(self,validated_data:dict) -> Hospital:
-        address_list = validated_data.pop('address')
-        hospitalobj = Hospital.objects.create(**validated_data)
-        
-        for address_dict in address_list:
-            addressobj, created = Address.objects.get_or_create(**address_dict)
+    def create(self, validated_data: dict) -> Hospital:
+        address_dict = validated_data.pop("address")
+        addressobj, created = Address.objects.get_or_create(**address_dict)
 
-            hospitalobj.address.add(addressobj)
-        
+        hospitalobj = Hospital.objects.create(**validated_data, address=addressobj)
+
+        hospitalobj.save()
         return hospitalobj
-    
+
     def update(self, instance: Hospital, validated_data: dict):
         address_dict: dict = validated_data.pop("address", None)
-        
+
         if address_dict:
             address_obj, created = Address.objects.get_or_create(user=instance)
             for key, value in address_dict.items():
