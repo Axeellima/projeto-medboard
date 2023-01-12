@@ -9,7 +9,6 @@ from .models import Patient
 from .serializers import PatientSerializer
 from employee.permissions import (
     IsSecretaryPermission,
-    IsDoctorPermission,
     IsDirectorPermission,
 )
 
